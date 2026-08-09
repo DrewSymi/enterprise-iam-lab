@@ -1,0 +1,36 @@
+# Credentials and secrets — never commit
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.crt
+*credential*
+*password*
+*secret*
+.env
+.env.*
+
+# Environment configs
+docker-compose.yml
+docker-compose.*.yml
+*resource*.xml
+*connector*.xml
+
+# Real directory exports (may contain user data)
+*.csv
+!**/sample-*.csv
+!**/example-*.csv
+reports/
+exports/
+evidence/raw/
+evidence/unredacted/
+
+# Standard
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+__pycache__/
+node_modules/
