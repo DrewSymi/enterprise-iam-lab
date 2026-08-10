@@ -1,16 +1,6 @@
 # Evidence — Screenshot Capture Guide
 
 This folder holds the visual proof behind each ticket, incident, and audit finding. Below is the exact list of screenshots to capture, named to match the references in each document so they render inline on GitHub.
-
-## Redaction checklist (do this on EVERY screenshot before committing)
-
-- [ ] No tenant IDs, subscription IDs, or object GUIDs
-- [ ] No real email addresses or usernames outside the fictional `Link3IT.com` lab
-- [ ] No passwords, tokens, secrets, or certificate content visible
-- [ ] No real internal IPs/hostnames you want kept private
-- [ ] No unrelated browser tabs, bookmarks, or notification popups
-- [ ] Crop tightly to the relevant panel; blur anything sensitive that remains
-
 ---
 
 ## Screenshots to capture, by document
