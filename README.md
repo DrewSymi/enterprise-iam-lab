@@ -52,7 +52,7 @@ I built this environment to practice the operational side of identity governance
 
 | Path | Contents |
 |------|----------|
-| [`docs/`](docs/) | Audit report, remediation runbook, **IAM triage playbook**, **identity-chain walkthrough**, architecture notes |
+| [`docs/`](docs/) | Audit report, remediation runbook, **IAM triage playbook**, **identity-chain walkthrough**, **deprovisioning checklist**, architecture notes |
 | [`scripts/`](scripts/) | PowerShell automation for reconciliation and lifecycle remediation |
 | [`tickets/`](tickets/) | Seven worked IAM tickets across file access, MFA, SSO/SAML, offboarding, CyberArk EPM & PASM, and Conditional Access &mdash; each documented end to end |
 | [`incidents/`](incidents/) | Incident writeups — what broke, root cause, recovery |
