@@ -22,3 +22,13 @@ Identifies and optionally disables accounts inactive past a threshold. Report-on
 ```
 
 Requires PowerShell 5.1+ and the ActiveDirectory module (RSAT).
+
+### Get-IdentitySnapshot.ps1
+One-command triage snapshot for a user — the "check everything first" pattern before diving into connector logs or provisioning workflows. Answers the four questions that start most investigations (enabled? last logon? locked/expired? groups?) in a single read-only call. Accepts a sAMAccountName **or** an email address (falls back to `-Filter` on `mail` automatically).
+
+```powershell
+.\Get-IdentitySnapshot.ps1 -User dokafor
+.\Get-IdentitySnapshot.ps1 -User "dana.okafor@link3it.com" -ShowGroups
+```
+
+Read-only. See [`docs/IAM-TRIAGE-PLAYBOOK.md`](../docs/IAM-TRIAGE-PLAYBOOK.md) for the full triage approach.

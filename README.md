@@ -52,15 +52,35 @@ I built this environment to practice the operational side of identity governance
 
 | Path | Contents |
 |------|----------|
-| [`docs/`](docs/) | Audit report, remediation runbook, operations journal, architecture notes |
+| [`docs/`](docs/) | Audit report, remediation runbook, **IAM triage playbook**, architecture notes |
 | [`scripts/`](scripts/) | PowerShell automation for reconciliation and lifecycle remediation |
-| [`tickets/`](tickets/) | Worked support tickets, documented end to end |
+| [`tickets/`](tickets/) | Seven worked IAM tickets across file access, MFA, SSO/SAML, offboarding, CyberArk EPM & PASM, and Conditional Access &mdash; each documented end to end |
 | [`incidents/`](incidents/) | Incident writeups — what broke, root cause, recovery |
 | [`evidence/`](evidence/) | Screenshots and exported artifacts |
 
 ---
 
 ## Featured work
+
+### 🎫 Worked IAM tickets — seven scenarios, seven domains
+**[`tickets/`](tickets/)**
+
+Real identity troubleshooting worked end to end, each following the same structure: reported issue → investigation → root cause → resolution → evidence → prevention. Together they span the breadth of day-to-day IAM work:
+
+- **File access** — NTFS vs share permissions and group-membership diagnosis ([1001](tickets/TICKET-1001-shared-drive-access.md))
+- **MFA** — lockout recovery with Temporary Access Pass, identity verified before reset ([1002](tickets/TICKET-1002-mfa-lockout-recovery.md))
+- **SSO / SAML** — reading an assertion to fix a NameID/attribute mismatch ([1003](tickets/TICKET-1003-sso-saml-attribute-mismatch.md))
+- **Offboarding** — a hybrid deprovisioning gap where "disabled on-prem" wasn't "disabled everywhere" ([1004](tickets/TICKET-1004-incomplete-offboarding.md))
+- **CyberArk PASM** — vaulted local-admin recovery during a stale-machine lockout ([1005](tickets/TICKET-1005-cyberark-vault-lockout-recovery.md))
+- **CyberArk EPM** — just-in-time elevation that elevates the action, not the user ([1006](tickets/TICKET-1006-epm-jit-elevation.md))
+- **Conditional Access** — sign-in log analysis and a time-bound exception for approved travel ([1007](tickets/TICKET-1007-conditional-access-travel-block.md))
+
+These are the job itself: reproduce, diagnose to root cause, fix safely, document so it doesn't recur.
+
+### 🔎 IAM Triage Playbook
+**[`docs/IAM-TRIAGE-PLAYBOOK.md`](docs/IAM-TRIAGE-PLAYBOOK.md)** · **[`scripts/Get-IdentitySnapshot.ps1`](scripts/Get-IdentitySnapshot.ps1)**
+
+The first five minutes of most identity investigations: validate the object before diving into connector logs or provisioning workflows. Covers the `Get-ADUser -Properties *` sanity check and the four questions it answers, the `-Identity` vs `-Filter` gotcha, checking **both** AD and Entra in hybrid environments, forcing a delta sync, and finding the touched account during incident response. The companion script turns the pattern into one read-only command that accepts a username or an email.
 
 ### 📋 Identity Lifecycle (JML) Audit
 **[`docs/JML-Identity-Lifecycle-Audit.pdf`](docs/JML-Identity-Lifecycle-Audit.pdf)**
