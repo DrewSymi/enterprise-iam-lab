@@ -181,6 +181,6 @@ This is an active environment. Work in progress is tracked openly rather than hi
 ## Contact
 
 **Andrew Symister**
-[iamandrewsymister.com](https://iamandrewsymister.com) · [LinkedIn](https://linkedin.com/in/andrew-symister)
+[LinkedIn](https://linkedin.com/in/andrewsymister)
 
 Open to remote and hybrid Identity and Access Management roles.
