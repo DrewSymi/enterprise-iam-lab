@@ -2,7 +2,7 @@
 
 A self-built hybrid identity environment used to practice real identity and access management operations: joiner-mover-leaver lifecycle, access governance, privileged access, and the audit and remediation work that follows.
 
-**Built and operated by [Andrew Symister]** · New York, NY
+**Built and operated by [Andrew Symister](https://iamandrewsymister.com)** · New York, NY
 
 > **This is a laboratory environment.** It runs real software on real infrastructure — a live Active Directory forest, a Microsoft Entra ID tenant with hybrid sync, and a SIEM ingesting genuine directory events. Findings and evidence in this repository come from real queries against those systems. It is not a production enterprise, and nothing here claims to be.
 
