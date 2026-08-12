@@ -52,7 +52,7 @@ I built this environment to practice the operational side of identity governance
 
 | Path | Contents |
 |------|----------|
-| [`docs/`](docs/) | Audit report, remediation runbook, **IAM triage playbook**, **identity-chain walkthrough**, **deprovisioning checklist**, architecture notes |
+| [`docs/`](docs/) | Audit report, remediation runbook, **IAM triage playbook**, **identity-chain walkthrough**, **deprovisioning checklist**, **PAM concepts reference**, architecture notes |
 | [`scripts/`](scripts/) | PowerShell automation for reconciliation and lifecycle remediation |
 | [`tickets/`](tickets/) | Seven worked IAM tickets across file access, MFA, SSO/SAML, offboarding, CyberArk EPM & PASM, and Conditional Access &mdash; each documented end to end |
 | [`incidents/`](incidents/) | Incident writeups — what broke, root cause, recovery |
@@ -86,6 +86,11 @@ The first five minutes of most identity investigations: validate the object befo
 **[`docs/TRACING-THE-IDENTITY-CHAIN.md`](docs/TRACING-THE-IDENTITY-CHAIN.md)**
 
 A walkthrough of how a vague "I lost access" ticket gets solved by following the identity path — user → directory → sync → identity provider → application — and finding which link broke. Explains why the same symptom can come from a group, an app assignment, a policy, or a single SAML claim, and why authentication succeeding is not the same as the application matching the account. This is the reasoning behind the worked tickets.
+
+### 🔐 PAM Concepts Reference
+**[`docs/PAM-CONCEPTS-REFERENCE.md`](docs/PAM-CONCEPTS-REFERENCE.md)**
+
+How privileged access management works, using CyberArk's architecture as the model: the four core components (Vault, PVWA, CPM, PSM) and how they interact; the CPM change / verify / reconcile operations and the dependent-account gotcha that breaks apps after a "successful" rotation; why PSM isolates sessions instead of showing the password; safes vs. platforms vs. accounts; the privileged access lifecycle; and how PAM and endpoint privilege management enforce least privilege together.
 
 ### 📋 Identity Lifecycle (JML) Audit
 **[`docs/JML-Identity-Lifecycle-Audit.pdf`](docs/JML-Identity-Lifecycle-Audit.pdf)**
