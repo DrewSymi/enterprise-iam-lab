@@ -1,22 +1,79 @@
-# Enterprise IAM Lab — Operation Link3IT
+<div align="center">
 
-A self-built hybrid identity environment used to practice real identity and access management operations: joiner-mover-leaver lifecycle, access governance, privileged access, and the audit and remediation work that follows.
+# 🔐 Operation Link3IT
 
-**Built and operated by [Andrew Symister](https://iamandrewsymister.com)** · New York, NY
+### The case file of an identity operator holding a financial firm's access perimeter
 
-> **This is a laboratory environment.** It runs real software on real infrastructure — a live Active Directory forest, a Microsoft Entra ID tenant with hybrid sync, and a SIEM ingesting genuine directory events. Findings and evidence in this repository come from real queries against those systems. It is not a production enterprise, and nothing here claims to be.
+*Investigate the directory · trace the break · remediate without collateral damage · prove every change*
+
+<br>
+
+![Active Directory](https://img.shields.io/badge/Active_Directory-Windows_Server_2022-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Entra ID](https://img.shields.io/badge/Microsoft_Entra_ID-Hybrid_Sync-0067B8?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![Okta](https://img.shields.io/badge/Okta-SSO_Federation-007DC1?style=for-the-badge&logo=okta&logoColor=white)
+![CyberArk](https://img.shields.io/badge/CyberArk-EPM_%2B_PASM-FF0000?style=for-the-badge&logo=cyberark&logoColor=white)
+
+![PowerShell](https://img.shields.io/badge/PowerShell-Automation-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
+![Python](https://img.shields.io/badge/Python-Provisioning-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Splunk](https://img.shields.io/badge/Splunk-SIEM-000000?style=for-the-badge&logo=splunk&logoColor=white)
+![NIST](https://img.shields.io/badge/NIST_800--53-Audit-2E5090?style=for-the-badge)
+
+<br>
+
+**Built and operated by Andrew Symister**
+`Identity & Access Management` · `Financial Services` · New York, NY
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-andrewsymister-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/andrewsymister)
+
+</div>
 
 ---
 
-## Why this exists
-
-Most identity work is invisible until it fails. An account that should have been disabled six months ago. A role change that added access without removing the old. A service account nobody owns.
-
-I built this environment to practice the operational side of identity governance — not just configuring tools, but running the lifecycle, auditing it, finding what broke, and fixing it with repeatable automation.
+> [!NOTE]
+> **This is a laboratory environment.** It runs real software on real infrastructure — a live Active Directory forest, a Microsoft Entra ID tenant with hybrid sync, and a SIEM ingesting genuine directory events. Findings and evidence come from real queries against those systems. It is not a production enterprise, and nothing here claims to be.
 
 ---
 
-## Architecture
+## 📖 Quick navigation
+
+| I want to see... | Go to |
+|---|---|
+| 🎫 Real troubleshooting, worked end to end | [**Worked tickets**](tickets/) — 7 scenarios across 7 domains |
+| 📋 A formal access audit with findings | [**JML Audit**](docs/JML-Identity-Lifecycle-Audit.pdf) — NIST 800-53 |
+| ⚙️ Automation I wrote | [**Scripts**](scripts/) — reconciliation, remediation, triage |
+| 🔥 How I handle failure | [**Incident writeup**](incidents/INC-001-conditional-access-lockout.md) |
+| 🔐 How I think about PAM | [**PAM concepts reference**](docs/PAM-CONCEPTS-REFERENCE.md) |
+| 🔎 How I diagnose | [**Triage playbook**](docs/IAM-TRIAGE-PLAYBOOK.md) · [**Identity chain**](docs/TRACING-THE-IDENTITY-CHAIN.md) |
+
+---
+
+## 🗺️ The premise
+
+> *Identity is the new perimeter. This is what it looks like to stand on it.*
+
+**Link3IT** is a mid-size financial firm. Roughly 45 identities, a hybrid directory, a cloud tenant, privileged accounts — and every one of them a door into systems, data, and revenue.
+
+I'm the operator responsible for those doors.
+
+This repository is my **case file** — the operational record of running that perimeter. Not a list of projects. A trail of evidence. Every folder is part of the same investigation: *who has access, should they, is it provable, and where does the chain break?*
+
+Most identity work is invisible until it fails — the account that should have been disabled six months ago, the role change that added access without removing the old, the service account nobody owns. This file is what it looks like to find those before they find you.
+
+**Follow the evidence:**
+
+```
+  THE CASE           →  can I account for every identity on the perimeter?
+  THE INVESTIGATION  →  audit the directory against the authoritative source
+  THE FINDINGS       →  34+ accounts no one owns · 39 stale · 1 created off-book
+  THE RESPONSE       →  remediate with automation that can't cause collateral damage
+  THE CALLS          →  7 tickets — the daily work of holding the line
+  THE NIGHT IT BROKE →  an incident, documented honestly
+  THE FIELD NOTES    →  lessons written down so the next operator doesn't bleed
+```
+
+---
+
+## 🏗️ The environment (the scene)
 
 ```
    Authoritative HR source (CSV feed)
@@ -44,11 +101,11 @@ I built this environment to practice the operational side of identity governance
   service accounts    correlation & detection
 ```
 
-**Platform:** Ubuntu 24.04 host, KVM/QEMU virtualization, Docker for containerized services. Cockpit and Portainer for host and container management. Jira for the operations board.
+**Platform:** Ubuntu 24.04 host · KVM/QEMU virtualization · Docker · Cockpit & Portainer for management · Jira operations board.
 
 ---
 
-## What's in this repository
+## 📂 What's in this repository
 
 | Path | Contents |
 |------|----------|
@@ -60,88 +117,96 @@ I built this environment to practice the operational side of identity governance
 
 ---
 
-## Featured work
+## 🔦 The case file
 
-### 🎫 Worked IAM tickets — seven scenarios, seven domains
-**[`tickets/`](tickets/)**
+> Follow the evidence. Every item is real, documented, and clickable — the record of an identity operator at work.
 
-Real identity troubleshooting worked end to end, each following the same structure: reported issue → investigation → root cause → resolution → evidence → prevention. Together they span the breadth of day-to-day IAM work:
+### 🥇 The three exhibits that tell the story fastest
 
-- **File access** — NTFS vs share permissions and group-membership diagnosis ([1001](tickets/TICKET-1001-shared-drive-access.md))
-- **MFA** — lockout recovery with Temporary Access Pass, identity verified before reset ([1002](tickets/TICKET-1002-mfa-lockout-recovery.md))
-- **SSO / SAML** — reading an assertion to fix a NameID/attribute mismatch ([1003](tickets/TICKET-1003-sso-saml-attribute-mismatch.md))
-- **Offboarding** — a hybrid deprovisioning gap where "disabled on-prem" wasn't "disabled everywhere" ([1004](tickets/TICKET-1004-incomplete-offboarding.md))
-- **CyberArk PASM** — vaulted local-admin recovery during a stale-machine lockout ([1005](tickets/TICKET-1005-cyberark-vault-lockout-recovery.md))
-- **CyberArk EPM** — just-in-time elevation that elevates the action, not the user ([1006](tickets/TICKET-1006-epm-jit-elevation.md))
-- **Conditional Access** — sign-in log analysis and a time-bound exception for approved travel ([1007](tickets/TICKET-1007-conditional-access-travel-block.md))
+<table>
+<tr>
+<td width="33%" valign="top">
 
-These are the job itself: reproduce, diagnose to root cause, fix safely, document so it doesn't recur.
+**🔍 The Investigation**
 
-### 🔎 IAM Triage Playbook
-**[`docs/IAM-TRIAGE-PLAYBOOK.md`](docs/IAM-TRIAGE-PLAYBOOK.md)** · **[`scripts/Get-IdentitySnapshot.ps1`](scripts/Get-IdentitySnapshot.ps1)**
+I audited the directory against the authoritative source. **34+ accounts** answered to no one. A 4-page case mapped to NIST 800-53 — 6 findings, ranked by risk, with what's working noted too.
 
-The first five minutes of most identity investigations: validate the object before diving into connector logs or provisioning workflows. Covers the `Get-ADUser -Properties *` sanity check and the four questions it answers, the `-Identity` vs `-Filter` gotcha, checking **both** AD and Entra in hybrid environments, forcing a delta sync, and finding the touched account during incident response. The companion script turns the pattern into one read-only command that accepts a username or an email.
+[**→ Open the audit**](docs/JML-Identity-Lifecycle-Audit.pdf)
 
-### 🔗 Tracing the Identity Chain
-**[`docs/TRACING-THE-IDENTITY-CHAIN.md`](docs/TRACING-THE-IDENTITY-CHAIN.md)**
+</td>
+<td width="33%" valign="top">
 
-A walkthrough of how a vague "I lost access" ticket gets solved by following the identity path — user → directory → sync → identity provider → application — and finding which link broke. Explains why the same symptom can come from a group, an app assignment, a policy, or a single SAML claim, and why authentication succeeding is not the same as the application matching the account. This is the reasoning behind the worked tickets.
+**📞 The Calls**
 
-### 🔐 PAM Concepts Reference
-**[`docs/PAM-CONCEPTS-REFERENCE.md`](docs/PAM-CONCEPTS-REFERENCE.md)**
+Seven tickets — the daily work of holding the line. File access, MFA lockouts, a broken SSO claim, an offboarding that only *looked* done. Each traced to root cause.
 
-How privileged access management works, using CyberArk's architecture as the model: the four core components (Vault, PVWA, CPM, PSM) and how they interact; the CPM change / verify / reconcile operations and the dependent-account gotcha that breaks apps after a "successful" rotation; why PSM isolates sessions instead of showing the password; safes vs. platforms vs. accounts; the privileged access lifecycle; and how PAM and endpoint privilege management enforce least privilege together.
+[**→ Read the tickets**](tickets/)
 
-### 📋 Identity Lifecycle (JML) Audit
-**[`docs/JML-Identity-Lifecycle-Audit.pdf`](docs/JML-Identity-Lifecycle-Audit.pdf)**
+</td>
+<td width="33%" valign="top">
 
-A four-page access risk assessment mapped to **NIST SP 800-53 Rev. 5** (AC-2, AC-2(3), AC-5, AC-6, IA-2).
+**🌙 The Night It Broke**
 
-Six findings with risk ratings, evidence, and a prioritized remediation plan. Headline finding: **34+ enabled accounts with no corresponding record in the authoritative source** — accounts that no lifecycle event would ever disable.
+An MFA policy locked out the admins when a break-glass exclusion silently failed to save. No spin — root cause, recovery, and the controls that came after.
 
-The report includes a *Controls Operating Effectively* section. An audit that only lists problems is a complaint; an audit that also documents what works is an assessment.
+[**→ Read INC-001**](incidents/INC-001-conditional-access-lockout.md)
 
-### ⚙️ Remediation automation
-**[`scripts/`](scripts/)**
+</td>
+</tr>
+</table>
 
-- **`Invoke-IdentityReconciliation.ps1`** — compares every enabled directory account against the authoritative source and classifies it as `MATCHED`, `UNMATCHED`, or `MISSING` (an HR record with no account — a provisioning gap in the other direction). Read-only.
-- **`Disable-StaleAccounts.ps1`** — inactivity-based account disablement with `-WhatIf` support, service-account protection, and self-documenting change annotations.
+### 📂 Everything in the file
 
-Both default to report-only. An identity script that changes state on first run is a liability.
+| # | Exhibit | What it proves |
+|---|---------|----------------|
+| 🔍 | [**The Investigation** — JML Audit](docs/JML-Identity-Lifecycle-Audit.pdf) | Formal access audit mapped to NIST 800-53 with risk-rated findings and a remediation plan |
+| 📞 | [**The Calls** — 7 Worked Tickets](tickets/) | End-to-end troubleshooting: file access, MFA, SSO/SAML, offboarding, CyberArk EPM & PASM, Conditional Access |
+| ⚙️ | [**The Response** — Remediation Scripts](scripts/) | Read-only-by-default PowerShell: reconciliation, stale-account disablement, identity triage |
+| 📖 | [**The Method** — Remediation Runbook](docs/REMEDIATION-RUNBOOK.md) | How & why each finding was fixed — including sequencing decisions that avoid outages |
+| 🌙 | [**The Night It Broke** — INC-001](incidents/INC-001-conditional-access-lockout.md) | How I handle failure: root cause, recovery, prevention |
+| 🔎 | [**First Five Minutes** — Triage Playbook](docs/IAM-TRIAGE-PLAYBOOK.md) | Validate the object before diving into logs — the operator's opening move |
+| 🔗 | [**Follow the Chain** — Identity Path](docs/TRACING-THE-IDENTITY-CHAIN.md) | Tracing user → directory → IdP → app to find where access breaks |
+| 🔐 | [**The Vault** — PAM Concepts](docs/PAM-CONCEPTS-REFERENCE.md) | How CyberArk PAM works: Vault/PVWA/CPM/PSM, change-verify-reconcile, session isolation |
+| 🧰 | [**Close the Doors** — Deprovisioning](docs/DEPROVISIONING-CHECKLIST.md) | Why "disabled ≠ removed" — verifying access is gone across every connected system |
+| ✅ | [**Prove It** — Audit & Edge Cases](docs/PROVING-IT-AUDIT-AND-EDGE-CASES.md) | Verifying changes land as audit events, and the JML edge cases that break the tidy HR trigger |
 
-### 📖 Remediation runbook
-**[`docs/REMEDIATION-RUNBOOK.md`](docs/REMEDIATION-RUNBOOK.md)**
+<details>
+<summary><b>📝 The operator's notes on the key exhibits</b> (click to expand)</summary>
 
-Documents *how* and *why* each finding was remediated, including the sequencing decision that matters most:
+<br>
+
+**📞 The Calls** each follow one structure — reported issue → investigation → root cause → resolution → evidence → prevention — across file access, MFA, SSO/SAML, offboarding, CyberArk EPM & PASM, and Conditional Access. This is the job itself: reproduce, diagnose to root cause, fix safely, document so it doesn't recur.
+
+**🔎 First Five Minutes** covers the `Get-ADUser -Properties *` sanity check and the four questions it answers, the `-Identity` vs `-Filter` gotcha, checking **both** AD and Entra in hybrid environments, forcing a delta sync, and finding the touched account during incident response. A companion script turns the pattern into one read-only command.
+
+**🔐 The Vault** explains the four CyberArk components and how they interact; change / verify / reconcile and the dependent-account gotcha that breaks apps after a "successful" rotation; why PSM isolates sessions instead of showing the password; and how PAM and EPM enforce least privilege together.
+
+**🔍 The Investigation** is mapped to NIST SP 800-53 Rev. 5 (AC-2, AC-2(3), AC-5, AC-6, IA-2). Six findings with risk ratings and a prioritized remediation plan, including a *Controls Operating Effectively* section — an audit that only lists problems is a complaint; one that also documents what works is an assessment.
+
+**⚙️ The Response** defaults to report-only. `Invoke-IdentityReconciliation.ps1` classifies every account as `MATCHED` / `UNMATCHED` / `MISSING`; `Disable-StaleAccounts.ps1` supports `-WhatIf`, protects service accounts, and annotates every change. An identity script that changes state on first run is a liability.
+
+**📖 The Method** documents the sequencing decision that matters most:
 
 > Remediation was ordered by dependency, not by finding number. The instinct was to start with the largest finding — 39 stale accounts — but that would have disabled functioning service accounts, because service accounts authenticate non-interactively and never populate `LastLogonDate`. Classification had to come first.
 
-### 🔥 Incident: Conditional Access lockout
-**[`incidents/`](incidents/)**
-
-A broad "Require MFA" policy was deployed with a break-glass exclusion. The exclusion silently failed to save, and administrators were caught in an MFA loop. Documented root cause, recovery, and the controls added to prevent recurrence.
-
-Real failures are more instructive than clean successes.
+</details>
 
 ---
 
-## Capabilities demonstrated
+## 🎯 Capabilities demonstrated
 
-**Identity lifecycle** — HR-driven provisioning and deprovisioning, joiner-mover-leaver automation, correlation on a unique identifier, orphan account detection, RBAC group models where a role change swaps a single group with zero residual access.
-
-**Access governance** — access certification campaigns with automatic remediation, entitlement models, least privilege, audit evidence production.
-
-**Authentication and access control** — Conditional Access policy design with break-glass and service-account exclusions, MFA enforcement, device compliance, SSO federation (SAML/OIDC) with Entra ID as identity provider.
-
-**Privileged access** — service account governance, credential rotation concepts, privileged session response, separation of privileged and standard access.
-
-**Detection and audit** — SIEM correlation of directory events against an authoritative source to surface ungoverned account creation, NIST 800-53 control mapping, audit-ready documentation.
-
-**Operations** — ITIL-aligned ticket handling, change documentation, runbook authoring, incident writeups.
+| Domain | What I've built and operated |
+|--------|------------------------------|
+| **Identity lifecycle** | HR-driven provisioning & deprovisioning, joiner-mover-leaver automation, correlation on a unique identifier, orphan-account detection, RBAC models where a role change swaps one group with zero residual access |
+| **Access governance** | Access certification campaigns with automatic remediation, entitlement models, least privilege, audit-evidence production |
+| **Authentication & access control** | Conditional Access design with break-glass & service-account exclusions, MFA enforcement, device compliance, SSO federation (SAML/OIDC) with Entra ID as IdP |
+| **Privileged access** | CyberArk EPM (JIT elevation) & PASM (vaulted credential retrieval), service-account governance, credential-rotation concepts, separation of privileged & standard access |
+| **Detection & audit** | SIEM correlation of directory events against an authoritative source to surface ungoverned account creation, NIST 800-53 control mapping, audit-ready documentation |
+| **Operations** | ITIL-aligned ticket handling, change documentation, runbook authoring, incident writeups |
 
 ---
 
-## Operating principles used throughout
+## ⚙️ Operating principles used throughout
 
 These are the habits the environment enforced, learned mostly by breaking things first:
 
@@ -152,10 +217,11 @@ These are the habits the environment enforced, learned mostly by breaking things
 - **Build the break-glass path before you enforce the policy** — and then test that the exclusion actually works.
 - **Verify in report-only mode.** Any broad access policy gets validated against real sign-in logs before enforcement.
 - **Annotate automated changes** with the reason and control reference, so the directory carries its own audit trail.
+- **Verify the change landed as an event.** A change and its audit event are two different things — confirm the event was written, because in a regulated environment an unprovable change is treated as one that never happened. ([details](docs/PROVING-IT-AUDIT-AND-EDGE-CASES.md))
 
 ---
 
-## Vendor translation
+## 🔄 Vendor translation
 
 The environment runs Microsoft Entra ID and MidPoint, but the concepts are portable. Where relevant, documentation notes the equivalent in other platforms:
 
@@ -168,7 +234,7 @@ The environment runs Microsoft Entra ID and MidPoint, but the concepts are porta
 
 ---
 
-## Repository status
+## 📊 Repository status
 
 This is an active environment. Work in progress is tracked openly rather than hidden:
 
@@ -178,9 +244,9 @@ This is an active environment. Work in progress is tracked openly rather than hi
 
 ---
 
-## Contact
+## 📬 Contact
 
 **Andrew Symister**
-[iamandrewsymister.com](https://iamandrewsymister.com) · [LinkedIn](https://linkedin.com/in/andrew-symister)
+[LinkedIn](https://linkedin.com/in/andrewsymister)
 
 Open to remote and hybrid Identity and Access Management roles.
