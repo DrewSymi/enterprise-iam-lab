@@ -23,6 +23,10 @@ This is the IAM equivalent of "let me just quickly check everything." It returns
 
 Run it before opening a runbook. It's the sanity check that confirms the user is configured the way you assume before you spend time anywhere else.
 
+**The triage check in practice:**
+
+![Get-ADUser triage snapshot](../evidence/triage-get-aduser-properties.png)
+
 ### Gotcha: -Identity vs -Filter
 
 `-Identity` only accepts **one of four unique identifiers**: distinguishedName, GUID, SID, or sAMAccountName. If all you have is an email address, or you're working from a list of thousands, `-Identity` won't help. Use `-Filter`:

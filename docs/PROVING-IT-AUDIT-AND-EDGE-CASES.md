@@ -22,6 +22,10 @@ index=windows_ad EventCode=4725 earliest=-1h
 
 Other changes, other events — the point is the same each time: **the change and the event are two different things, and I verify both.**
 
+**The SIEM ingesting real directory security events from the domain controller** — this is where change verification actually happens: every account create, disable, and logon lands here as a queryable, timestamped, attributable event:
+
+![Splunk ingesting Windows Security events from DC01](../evidence/audit-security-events-splunk.png)
+
 | Change | The event that proves it |
 |--------|--------------------------|
 | Account created | 4720 |

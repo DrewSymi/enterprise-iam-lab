@@ -205,6 +205,22 @@ This finding cannot be fixed with a script alone; it requires a process change.
 
 ---
 
+## Evidence
+
+**Reconciliation against the authoritative source** — every enabled account classified MATCHED / UNMATCHED / MISSING. Note the `Mode: READ-ONLY` and `No changes were made` — detection and remediation are deliberately separate steps:
+
+![Identity reconciliation output](../evidence/audit-reconciliation-output.png)
+
+**Stale-account remediation in dry-run** — `-WhatIf` shows exactly what *would* be disabled, with service accounts correctly excluded (they authenticate non-interactively and never populate LastLogonDate):
+
+![Stale account disable, WhatIf preview](../evidence/audit-whatif-disable.png)
+
+**Remediation applied** — the unmanaged account disabled and annotated with the date and control reference (disable and retain, never delete):
+
+![Remediation after — account disabled and annotated](../evidence/audit-remediation-after.png)
+
+---
+
 ## Operating notes
 
 - **Scripts are read-only by default.** This is deliberate. An identity script that changes state on first run is a liability.

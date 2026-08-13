@@ -51,9 +51,13 @@ A role change removed the user from `GG-Finance-Reports-RW`. The offboarding hal
 
 ## Evidence
 
-- `evidence/TICKET-1001-group-membership-before.png` — user missing from the access group
-- `evidence/TICKET-1001-group-membership-after.png` — user restored to the access group
-- `evidence/TICKET-1001-share-access-restored.png` — user opening the share successfully
+**Before — the user is missing from the access group** (the diagnosis that found root cause):
+
+![Group membership before — user missing from GG-Finance-Reports-RW](../evidence/TICKET-1001-group-membership-before.png)
+
+**After — group membership restored:**
+
+![Group membership after — user restored to the group](../evidence/TICKET-1001-group-membership-after.png)
 
 ---
 
